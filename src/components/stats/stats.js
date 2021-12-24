@@ -5,6 +5,7 @@ import {
   MailOpenIcon,
   UsersIcon,
 } from "@heroicons/react/outline";
+import { classNames } from "../../utils";
 
 const stats = [
   {
@@ -32,10 +33,6 @@ const stats = [
     changeType: "decrease",
   },
 ];
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(" ");
-}
 
 export function Stats() {
   return (
