@@ -1,42 +1,11 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
+import { useNotification } from "../../context/notification";
 import { Transition } from "@headlessui/react";
-import { CheckCircleIcon } from "@heroicons/react/outline";
 import { XIcon } from "@heroicons/react/solid";
-import { classNames } from "../../utils";
+import { generateIcon } from "./generate";
 
 export function Notification() {
-  const [notification, setNotification] = useState([
-    {
-      id: "a",
-      show: true,
-      type: "success",
-      header: "alert 1",
-      content: "hooooooo",
-    },
-    {
-      id: "a",
-      show: true,
-      type: "error",
-      header: "alert 2 ",
-      content: "hehe",
-    },
-  ]);
-
-  const addNotification = (index) => {
-    notification.push({
-      id: "a",
-      show: true,
-      type: "error",
-      header: "alert 2 ",
-      content: "hehe",
-    });
-    setNotification([...notification]);
-  };
-
-  const hideNotification = (index) => {
-    notification[index].show = false;
-    setNotification([...notification]);
-  };
+  const { state, deleteNotification } = useNotification();
 
   return (
     <>
@@ -47,11 +16,11 @@ export function Notification() {
       >
         <div className="w-full flex flex-col items-center space-y-3 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
-          {notification.map((notif, index) => (
+          {state.map((notification) => (
             <Transition
-              show={notif.show}
+              show={notification.show}
               as={Fragment}
-              key={index}
+              key={notification.id}
               enter="transform ease-out duration-300 transition"
               enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
               enterTo="translate-y-0 opacity-100 sm:translate-x-0"
@@ -59,36 +28,25 @@ export function Notification() {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div
-                id={notif.id}
-                className="transition-all max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden"
-              >
+              <div className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="p-4">
                   <div className="flex items-start">
                     <div className="flex-shrink-0">
-                      <CheckCircleIcon
-                        className={classNames(
-                          notif.type === "success"
-                            ? "text-green-400"
-                            : "text-red-400",
-                          "h-6 w-6"
-                        )}
-                        aria-hidden="true"
-                      />
+                      {generateIcon(notification.type)}
                     </div>
                     <div className="ml-3 w-0 flex-1 pt-0.5">
                       <p className="text-sm font-medium text-gray-900">
-                        {notif.header}
+                        {notification.header}
                       </p>
                       <p className="mt-1 text-sm text-gray-500">
-                        {notif.content}
+                        {notification.content}
                       </p>
                     </div>
                     <div className="ml-4 flex-shrink-0 flex">
                       <button
                         className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
                         onClick={() => {
-                          hideNotification(index);
+                          deleteNotification(notification.id);
                         }}
                       >
                         <span className="sr-only">Close</span>

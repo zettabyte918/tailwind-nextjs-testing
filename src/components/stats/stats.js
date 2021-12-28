@@ -6,6 +6,7 @@ import {
   UsersIcon,
 } from "@heroicons/react/outline";
 import { classNames } from "../../utils";
+import { useNotification } from "../../context/notification";
 
 const stats = [
   {
@@ -35,6 +36,8 @@ const stats = [
 ];
 
 export function Stats() {
+  const { state, addNotification } = useNotification();
+
   return (
     <div>
       <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -88,6 +91,9 @@ export function Stats() {
               <div className="absolute bottom-0 inset-x-0 bg-gray-50 px-4 py-4 sm:px-6">
                 <div className="text-sm">
                   <a
+                    onClick={() =>
+                      addNotification("DANGER", "SUCCESS", "SUCCESS")
+                    }
                     href="#"
                     className="font-medium text-indigo-600 hover:text-indigo-500"
                   >

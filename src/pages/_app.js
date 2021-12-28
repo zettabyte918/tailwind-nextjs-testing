@@ -1,7 +1,12 @@
-import '../styles/globals.css'
+import "../styles/globals.css";
+import { ToastContextProvider } from "../context/notification/notifContext";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <ToastContextProvider>
+      <Component {...pageProps} />;
+    </ToastContextProvider>
+  );
 }
 
-export default MyApp
+export default MyApp;
