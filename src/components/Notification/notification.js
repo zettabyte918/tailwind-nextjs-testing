@@ -1,11 +1,11 @@
 import { Fragment } from "react";
-import { useNotification } from "../../context/notification";
+import { useNotification } from "./context/notification";
 import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/solid";
 import { generateIcon } from "./generate";
 
 export function Notification() {
-  const { state, deleteNotification } = useNotification();
+  const { notifications, deleteNotification } = useNotification();
 
   return (
     <>
@@ -16,8 +16,9 @@ export function Notification() {
       >
         <div className="w-full flex flex-col items-center space-y-3 sm:items-end">
           {/* Notification panel, dynamically insert this into the live region when it needs to be displayed */}
-          {state.map((notification) => (
+          {notifications.map((notification, index) => (
             <Transition
+              appear={true}
               show={notification.show}
               as={Fragment}
               key={notification.id}
@@ -25,8 +26,8 @@ export function Notification() {
               enterFrom="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
               enterTo="translate-y-0 opacity-100 sm:translate-x-0"
               leave="transition ease-in duration-200"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
+              leaveFrom="translate-x-0 opacity-100"
+              leaveTo="translate-x-2 opacity-0"
             >
               <div className="max-w-sm w-full bg-white shadow-lg rounded-lg pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
                 <div className="p-4">
@@ -46,7 +47,7 @@ export function Notification() {
                       <button
                         className="bg-white rounded-md inline-flex text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
                         onClick={() => {
-                          deleteNotification(notification.id);
+                          deleteNotification(notification);
                         }}
                       >
                         <span className="sr-only">Close</span>

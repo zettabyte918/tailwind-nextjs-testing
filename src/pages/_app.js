@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { ToastContextProvider } from "../context/notification/notifContext";
+import { ToastContextProvider } from "../components/Notification/context/notification/notifContext";
 
 function MyApp({ Component, pageProps }) {
   return (

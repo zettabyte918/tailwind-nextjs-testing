@@ -6,7 +6,7 @@ import {
   UsersIcon,
 } from "@heroicons/react/outline";
 import { classNames } from "../../utils";
-import { useNotification } from "../../context/notification";
+import { useNotification } from "../Notification/context/notification";
 
 const stats = [
   {
@@ -36,7 +36,7 @@ const stats = [
 ];
 
 export function Stats() {
-  const { state, addNotification } = useNotification();
+  const { addNotification } = useNotification();
 
   return (
     <div>
