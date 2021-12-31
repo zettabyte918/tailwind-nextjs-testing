@@ -14,6 +14,7 @@ import {
 import { SearchIcon } from "@heroicons/react/solid";
 import { Stats } from "../";
 import { classNames } from "../../utils";
+import { useSession } from "next-auth/react";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -31,7 +32,8 @@ const userNavigation = [
 
 export function Sidebar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const { data: session, status } = useSession();
+  if (status === "loading") return "Loading";
   return (
     <div className="h-screen flex overflow-hidden bg-gray-100">
       <Transition.Root show={sidebarOpen} as={Fragment}>
@@ -288,7 +290,7 @@ export function Sidebar() {
           <div className="py-6">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
               <h1 className="text-2xl font-semibold text-gray-900">
-                Dashboard
+                Welcome, {session?.user.username}
               </h1>
             </div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
