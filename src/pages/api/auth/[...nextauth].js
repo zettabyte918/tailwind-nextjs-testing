@@ -9,7 +9,8 @@ export default NextAuth({
   providers: [
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
-      name: "Credentials",
+      id: "strapi-local",
+      name: "strapi-local",
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
@@ -21,7 +22,7 @@ export default NextAuth({
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
         const { data } = await axios.post(
-          "http://localhost:1337/api/auth/local",
+          `${process.env.STRAPI_BACKEND_API_URL}/api/auth/local`,
           credentials
         );
 
@@ -74,7 +75,7 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
+    signIn: "/auth/signin", // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
@@ -86,7 +87,9 @@ export default NextAuth({
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     // async signIn({ user, account, profile, email, credentials }) { return true },
-    // async redirect({ url, baseUrl }) { return baseUrl },
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
+    },
     async jwt({ token, user, account, profile, isNewUser }) {
       if (user) {
         token.accessToken = user.jwt;
