@@ -1,11 +1,14 @@
-import "../styles/globals.css";
+import { SessionProvider } from "next-auth/react";
 import { ToastContextProvider } from "../components/Notification/context/notification/notifContext";
+import "../styles/globals.css";
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <ToastContextProvider>
-      <Component {...pageProps} />;
-    </ToastContextProvider>
+    <SessionProvider session={session}>
+      <ToastContextProvider>
+        <Component {...pageProps} />
+      </ToastContextProvider>
+    </SessionProvider>
   );
 }
 
