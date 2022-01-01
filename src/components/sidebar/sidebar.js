@@ -14,7 +14,7 @@ import {
 import { SearchIcon } from "@heroicons/react/solid";
 import { Stats } from "../";
 import { classNames } from "../../utils";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const navigation = [
   { name: "Dashboard", href: "#", icon: HomeIcon, current: true },
@@ -269,6 +269,7 @@ export function Sidebar() {
                           {({ active }) => (
                             <a
                               href={item.href}
+                              onClick={signOut}
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
