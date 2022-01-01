@@ -10,7 +10,7 @@ export default NextAuth({
     CredentialsProvider({
       // The name to display on the sign in form (e.g. "Sign in with...")
       id: "strapi-local",
-      name: "strapi-local",
+      name: "local",
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
@@ -86,7 +86,12 @@ export default NextAuth({
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    // async signIn({ user, account, profile, email, credentials }) { return true },
+    async signIn({ user, account, profile, email, credentials }) {
+      if (account.provider === "strapi-local") {
+        if (user.user.blocked === true) return false;
+      }
+      return true;
+    },
     async redirect({ url, baseUrl }) {
       return url.startsWith(baseUrl) ? url : baseUrl;
     },
