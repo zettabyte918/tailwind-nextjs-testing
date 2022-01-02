@@ -1,7 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, Fragment, useRef } from "react";
 import { signIn } from "next-auth/react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { useNotification } from "../../components/Notification/context/notification";
+import { Transition } from "@headlessui/react";
 
 export default function Signin() {
   // const [identifier, setIdentifier] = useState(null);
@@ -23,11 +24,23 @@ export default function Signin() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
+            <Transition
+              appear={true}
+              show={true}
+              as={Fragment}
+              enter="transform ease-out duration-300 transition"
+              enterFrom="translate-y-2 blur-sm opacity-0 sm:translate-y-0 sm:-translate-x-2"
+              enterTo="translate-y-0 opacity-100 sm:translate-x-0"
+              leave="transition ease-in duration-200"
+              leaveFrom="translate-x-0 opacity-100"
+              leaveTo="translate-x-2 opacity-0"
+            >
+              <img
+                className="mx-auto h-12 w-auto"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt="Workflow"
+              />
+            </Transition>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign in to your account
             </h2>
