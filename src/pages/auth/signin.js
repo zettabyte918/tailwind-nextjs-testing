@@ -28,7 +28,7 @@ export default function Signin() {
               appear={true}
               show={true}
               as={Fragment}
-              enter="transform ease-out duration-300 transition"
+              enter="transform ease-out delay-100 duration-300 transition"
               enterFrom="translate-y-2 blur-sm opacity-0 sm:translate-y-0 sm:-translate-x-2"
               enterTo="translate-y-0 opacity-100 sm:translate-x-0"
               leave="transition ease-in duration-200"
