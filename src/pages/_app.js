@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import { Router, useRouter } from "next/router";
 import NProgress from "nprogress";
 import { Sidebar, Notification, ToastContextProvider } from "../components";
+import Head from "next/head";
 
 const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   const router = useRouter();
@@ -21,18 +22,26 @@ const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
   }, []);
 
   return (
-    <SessionProvider session={session}>
-      <ToastContextProvider>
-        <Notification />
-        {router.pathname !== "/auth/signin" ? (
-          <Sidebar>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
+        />
+      </Head>
+      <SessionProvider session={session}>
+        <ToastContextProvider>
+          <Notification />
+          {router.pathname !== "/auth/signin" ? (
+            <Sidebar>
+              <Component {...pageProps} />
+            </Sidebar>
+          ) : (
             <Component {...pageProps} />
-          </Sidebar>
-        ) : (
-          <Component {...pageProps} />
-        )}
-      </ToastContextProvider>
-    </SessionProvider>
+          )}
+        </ToastContextProvider>
+      </SessionProvider>
+    </>
   );
 };
 

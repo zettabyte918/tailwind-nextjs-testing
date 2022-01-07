@@ -3458,7 +3458,7 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=
 
-next-auth@^4.0.6:
+next-auth@latest:
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.0.6.tgz#93ca158993fc259c3d00029f644fc98825321e3c"
   integrity sha512-44IwABioPpfI+T8zEHfCH3S7xigd+7XxbqVj2uUTwLZaaYXpjhsNYgiE2ZCh5+8vbj/ls89ypl0TLL7mQeKA8Q==
