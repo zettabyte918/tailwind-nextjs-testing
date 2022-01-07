@@ -10,8 +10,8 @@ async function middleware(req, ev) {
 
   if (session || pathname.includes("/api/auth")) return NextResponse.next();
 
-  if (!session && pathname !== "/auth/signin")
-    return NextResponse.redirect("/auth/signin");
+  // if (!session && pathname !== "/auth/signin")
+  //   return NextResponse.redirect("/auth/signin");
 }
 
 export default middleware;
