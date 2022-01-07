@@ -1,1 +1,1 @@
-export { useNotification } from "./notifContext";
+export { useNotification, ToastContextProvider } from "./notifContext";

@@ -1,26 +1,39 @@
+import { useEffect } from "react";
 import { SessionProvider } from "next-auth/react";
-import { ToastContextProvider } from "../components/Notification/context/notification/notifContext";
 import "../styles/globals.css";
-import { Notification } from "../components";
-import Router from "next/router";
+import { Router, useRouter } from "next/router";
 import NProgress from "nprogress";
+import { Sidebar, Notification, ToastContextProvider } from "../components";
 
-Router.events.on("routeChangeStart", (url) => {
-  console.log(`Loading: ${url}`);
-  NProgress.start();
-});
-Router.events.on("routeChangeComplete", () => NProgress.done());
-Router.events.on("routeChangeError", () => NProgress.done());
+const MyApp = ({ Component, pageProps: { session, ...pageProps } }) => {
+  const router = useRouter();
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+  useEffect(() => {
+    Router.events.on("routeChangeStart", () => NProgress.start());
+    Router.events.on("routeChangeComplete", () => NProgress.done());
+    Router.events.on("routeChangeError", () => NProgress.done());
+
+    return () => {
+      Router.events.off("routeChangeStart", () => NProgress.start());
+      Router.events.off("routeChangeComplete", () => NProgress.done());
+      Router.events.off("routeChangeError", () => NProgress.done());
+    };
+  }, []);
+
   return (
     <SessionProvider session={session}>
       <ToastContextProvider>
         <Notification />
-        <Component {...pageProps} />
+        {router.pathname !== "/auth/signin" ? (
+          <Sidebar>
+            <Component {...pageProps} />
+          </Sidebar>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </ToastContextProvider>
     </SessionProvider>
   );
-}
+};
 
 export default MyApp;
